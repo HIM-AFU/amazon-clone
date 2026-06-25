@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#eaeded;
+        }
+
+        .navbar{
+            background:#131921;
+            color:white;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:15px 30px;
+        }
+
+        .logo{
+            font-size:28px;
+            font-weight:bold;
+            color:#ff9900;
+        }
+
+        .search-box{
+            width:50%;
+            padding:10px;
+            border:none;
+            border-radius:5px;
+        }
+
+        .hero{
+            background:url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200");
+            background-size:cover;
+            background-position:center;
+            height:300px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            font-size:40px;
+            font-weight:bold;
+        }
+
+        .products{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:20px;
+            padding:30px;
+        }
+
+        .card{
+            background:white;
+            padding:15px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        .card img{
+            width:100%;
+            height:220px;
+            object-fit:cover;
+        }
+
+        .card h3{
+            margin:10px 0;
+        }
+
+        .price{
+            color:green;
+            font-size:20px;
+            font-weight:bold;
+        }
+
+        button{
+            background:#ff9900;
+            border:none;
+            padding:10px 15px;
+            margin-top:10px;
+            cursor:pointer;
+            border-radius:5px;
+        }
+
+        button:hover{
+            background:#f08804;
+        }
+
+        footer{
+            background:#131921;
+            color:white;
+            text-align:center;
+            padding:20px;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">amazon</div>
+        <input type="text" id="search" class="search-box"
+               placeholder="Search products...">
+    </div>
+
+    <div class="hero">
+        Welcome to Amazon Clone
+    </div>
+
+    <div class="products" id="productContainer"></div>
+
+    <footer>
+        Amazon Clone ©️ 2026
+    </footer>
+
+    <script>
+       const products = [
+{
+name:"iPhone 15",
+price:"₹79,999",
+image:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400"
+},
+{
+name:"Samsung Galaxy S24",
+price:"₹69,999",
+image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"
+},
+{
+name:"MacBook Air",
+price:"₹99,999",
+image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+},
+{
+name:"HP Laptop",
+price:"₹55,999",
+image:"https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400"
+},
+{
+name:"Smart Watch",
+price:"₹2,999",
+image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"
+},
+{
+name:"Wireless Earbuds",
+price:"₹1,499",
+image:"https://images.unsplash.com/photo-1606220588913-b3aacb4d2f37?w=400"
+},
+{
+name:"Gaming Mouse",
+price:"₹999",
+image:"https://images.unsplash.com/photo-1527814050087-3793815479db?w=400"
+},
+{
+name:"Mechanical Keyboard",
+price:"₹2,499",
+image:"https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400"
+},
+{
+name:"Bluetooth Speaker",
+price:"₹1,999",
+image:"https://images.unsplash.com/photo-1589003077984-894e133dabab?w=400"
+},
+{
+name:"DSLR Camera",
+price:"₹45,999",
+image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400"
+},
+{
+name:"Running Shoes",
+price:"₹2,299",
+image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"
+},
+{
+name:"Backpack",
+price:"₹1,299",
+image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400"
+},
+{
+name:"LED Monitor",
+price:"₹8,999",
+image:"https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400"
+},
+{
+name:"Office Chair",
+price:"₹5,999",
+image:"https://images.unsplash.com/photo-1505843513577-22bb7d21e455?w=400"
+},
+{
+name:"Coffee Maker",
+price:"₹3,499",
+image:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400"
+},
+{
+name:"Gaming Headset",
+price:"₹2,799",
+image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+}
+];
+ const container = document.getElementById("productContainer");
+
+        function displayProducts(items){
+            container.innerHTML = "";
+
+            items.forEach(product => {
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${product.image}" alt="">
+                        <h3>${product.name}</h3>
+                        <p class="price">${product.price}</p>
+                        <button onclick="addToCart('${product.name}')">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function addToCart(product){
+            alert(product + " added to cart!");
+        }
+
+        displayProducts(products);
+
+        document.getElementById("search")
+        .addEventListener("keyup", function(){
+            const value = this.value.toLowerCase();
+
+            const filtered = products.filter(item =>
+                item.name.toLowerCase().includes(value)
+            );
+
+            displayProducts(filtered);
+        });
+    </script>
+
+</body>
+</html>
